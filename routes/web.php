@@ -14,7 +14,7 @@ Passamos 2 metodos para o route ( 1º parametro = URL, 2º parametro = Ação ou
 */
 
 // Rotas individuais
-Route::get('/', "PrincipalController@principal")->name('site.index');
+Route::get('/', "PrincipalController@principal")->name('site.principal');
 
 Route::get('/sobre-nos', "SobreNosController@sobreNos")->name('site.sobrenos');
 
@@ -25,7 +25,7 @@ Route::get('/login', function(){return "Login";})->name('site.login');
 // Agrupar rotas em uma só
 Route::prefix('/app')->group(function(){
     Route::get('/clientes', function(){return "Clientes";});
-    Route::get('/fornecedores', function(){return "Fornecedores";});
+    Route::get('/fornecedores', 'FornecedorController@index');
     Route::get('/produtos', function(){return "produtos";});
 });
 
