@@ -1,5 +1,10 @@
 <!DOCTYPE html>
 
+{{--
+    include == desloca o conteudo do arquivo para o arquivo que o chamou
+    yield == desloca o conteudo do arquivo que o chamou para o arquivo que foi chamado
+    --}}
+
 <html lang="pt-br">
     <head>
         <title>@yield('titulo')</title>
@@ -12,7 +17,4 @@
     </body>
 </html>
 
-{{--
-    include == desloca o conteudo do arquivo para o arquivo que o chamou
-    yield == desloca o conteudo do arquivo que o chamou para o arquivo que foi chamado
-    --}}
+

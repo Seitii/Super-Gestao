@@ -1,5 +1,15 @@
 @extends('site.layouts.basico')
 
+{{--
+   csrf == Falsificação de solicitações entre sites.
+        == Gera um token para o formulário, para que o formulário seja enviado apenas pelo site que o gerou.
+
+    Component = Views dentro de outras views
+              == Incluir parametros em views
+              {{$slot}}
+              define dentro do componente onde o conteudo será exibido
+        --}}
+
 
 
 @section('conteudo')
@@ -10,24 +20,9 @@
 
         <div class="informacao-pagina">
             <div class="contato-principal">
-                <form>
-                    <input type="text" placeholder="Nome" class="borda-preta">
-                    <br>
-                    <input type="text" placeholder="Telefone" class="borda-preta">
-                    <br>
-                    <input type="text" placeholder="E-mail" class="borda-preta">
-                    <br>
-                    <select class="borda-preta">
-                        <option value="">Qual o motivo do contato?</option>
-                        <option value="">Dúvida</option>
-                        <option value="">Elogio</option>
-                        <option value="">Reclamação</option>
-                    </select>
-                    <br>
-                    <textarea class="borda-preta">Preencha aqui a sua mensagem</textarea>
-                    <br>
-                    <button type="submit" class="borda-preta">ENVIAR</button>
-                </form>
+                @component('site.layouts._components.form_contato', ['classe' => 'borda-preta'])
+                    <p>A nossa equip entrara em contato em breve</p>
+                @endcomponent
             </div>
         </div>
         </div>
