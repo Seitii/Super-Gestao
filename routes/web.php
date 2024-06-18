@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Middleware\LogAcessoMiddleware;
 
 /*
 Registra as rotas para o web
@@ -11,24 +12,33 @@ definimos os metodos no route. ( podemos adicinonar os verbos http ( CRUD ) )
 
 Passamos 2 metodos para o route ( 1º parametro = URL, 2º parametro = Ação ou função quando a URL for acessada )
 
+Next sempre passa a requisição para frente
+
+
 */
 
 // Rotas individuais
-Route::get('/', "PrincipalController@principal")->name('site.principal');
+Route::get('/', "PrincipalController@principal")
+    ->name('site.principal')
+    ->middleware('log.acesso');
 
-Route::get('/sobre-nos', "SobreNosController@sobreNos")->name('site.sobrenos');
+Route::get('/sobre-nos', "SobreNosController@sobreNos")->name('site.sobrenos')
+    ->middleware('log.acesso');
 
 Route::get('/contato', "ContatoController@contato")->name('site.contato');
-Route::post('/contato', "ContatoController@contato")->name('site.contato');
-
+Route::post('/contato', "ContatoController@salvar")->name('site.contato');
 
 Route::get('/login', function(){return "Login";})->name('site.login');
 
-// Agrupar rotas em uma só
-Route::prefix('/app')->group(function(){
-    Route::get('/clientes', function(){return "Clientes";});
-    Route::get('/fornecedores', 'FornecedorController@index');
-    Route::get('/produtos', function(){return "produtos";});
+// Agrupar rotas em uma só e definindo o middleware para todas as rotas do grupo.
+Route::middleware('autenticacao:padrao')->prefix('/app')->group(function(){
+    //Route::middleware('log.acesso','autenticacao') // chamamos 2 middlewares na rota de clientes.
+    Route::get('/clientes', function(){return "Clientes";})
+    ->name('app.clientes');
+    Route::get('/fornecedores', 'FornecedorController@index')
+    ->name('app.fornecedores');
+    Route::get('/produtos', function(){return "produtos";})
+    ->name('app.produtos');
 });
 
 Route::get('/teste/{p1}/{p2}', 'testeController@teste')->name('teste');
