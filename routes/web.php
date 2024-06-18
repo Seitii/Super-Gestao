@@ -14,7 +14,6 @@ Passamos 2 metodos para o route ( 1º parametro = URL, 2º parametro = Ação ou
 
 Next sempre passa a requisição para frente
 
-
 */
 
 // Rotas individuais
@@ -28,17 +27,23 @@ Route::get('/sobre-nos', "SobreNosController@sobreNos")->name('site.sobrenos')
 Route::get('/contato', "ContatoController@contato")->name('site.contato');
 Route::post('/contato', "ContatoController@salvar")->name('site.contato');
 
+Route::get('/login/{erro?}', 'LoginController@index')->name('site.login');
+Route::post('/login', 'LoginController@autenticar')->name('site.login');
+
 Route::get('/login', function(){return "Login";})->name('site.login');
 
 // Agrupar rotas em uma só e definindo o middleware para todas as rotas do grupo.
 Route::middleware('autenticacao:padrao')->prefix('/app')->group(function(){
+    Route::get('/home', 'HomeController@index')->name('app.home');
+    Route::get('/sair', 'LoginController@sair')->name('app.sair');
+    Route::get('/cliente', 'ClienteController@index')->name('app.cliente');
+    Route::get('/fornecedor', 'FornecedorController@index')->name('app.fornecedor');
+    Route::get('/produto', 'ProdutoController@index')->name('app.produto');
+
     //Route::middleware('log.acesso','autenticacao') // chamamos 2 middlewares na rota de clientes.
-    Route::get('/clientes', function(){return "Clientes";})
-    ->name('app.clientes');
-    Route::get('/fornecedores', 'FornecedorController@index')
-    ->name('app.fornecedores');
-    Route::get('/produtos', function(){return "produtos";})
-    ->name('app.produtos');
+    //Route::get('/clientes', function(){return "Clientes";})
+    //->name('app.clientes'); // nome da rota com uma função de callback anonima (closure) que retorna uma string "Clientes".
+
 });
 
 Route::get('/teste/{p1}/{p2}', 'testeController@teste')->name('teste');

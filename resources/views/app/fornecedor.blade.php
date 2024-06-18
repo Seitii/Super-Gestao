@@ -1,5 +1,3 @@
-<h1>Teste</h1>
-
 {{--
 
     Comentarios em blade
@@ -10,7 +8,11 @@
 
     Template = Modelo de base para a criação de algo
 --}}
+@extends('app.layouts.basico')
 
-@php
+@section('titulo', 'fornecedor')
 
-@endphp
+@section('conteudo')
+    <br><br><br><br>fornecedor
+@endsection
+
